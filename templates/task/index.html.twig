@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des tâches{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>
+        <i class="bi bi-list-task"></i>
+        Liste des tâches
+    </h1>
+    <a href="{{ path('app_task_new') }}" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Nouvelle tâche
+    </a>
+</div>
+
+<div class="row">
+    {% for task in tasks %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 {% if task.status %}bg-light{% endif %} shadow-sm">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span class="badge {% if task.status %}bg-success{% else %}bg-warning{% endif %}">
+                        {% if task.status %}
+                            <i class="bi bi-check-circle"></i> Terminée
+                        {% else %}
+                            <i class="bi bi-clock"></i> En cours
+                        {% endif %}
+                    </span>
+                    <small class="text-muted">
+                        <i class="bi bi-calendar"></i>
+                        {{ task.createdAt|date('d/m/Y') }}
+                    </small>
+                </div>
+
+                <div class="card-body">
+                    <h5 class="card-title {% if task.status %}text-decoration-line-through text-muted{% endif %}">
+                        {{ task.title }}
+                    </h5>
+                    <p class="card-text">{{ task.description|default('Aucune description') }}</p>
+                </div>
+
+                <div class="card-footer bg-transparent">
+                    <div class="btn-group w-100" role="group">
+                        <form method="post" action="{{ path('app_task_toggle', {'id': task.id}) }}" class="d-inline">
+                            <input type="hidden" name="_token" value="{{ csrf_token('toggle' ~ task.id) }}">
+                            <button type="submit" class="btn btn-sm {% if task.status %}btn-warning{% else %}btn-success{% endif %} rounded-start">
+                                {% if task.status %}
+                                    <i class="bi bi-arrow-counterclockwise"></i> Réouvrir
+                                {% else %}
+                                    <i class="bi bi-check-lg"></i> Terminer
+                                {% endif %}
+                            </button>
+                        </form>
+
+                        <a href="{{ path('app_task_edit', {'id': task.id}) }}" class="btn btn-sm btn-primary">
+                            <i class="bi bi-pencil"></i> Modifier
+                        </a>
+
+                        <form method="post" action="{{ path('app_task_delete', {'id': task.id}) }}"
+                              class="d-inline"
+                              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ task.id) }}">
+                            <button type="submit" class="btn btn-sm btn-danger rounded-end">
+                                <i class="bi bi-trash"></i> Supprimer
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="col-12">
+            <div class="alert alert-info text-center" role="alert">
+                <i class="bi bi-info-circle fs-1 d-block mb-3"></i>
+                <h4>Aucune tâche pour le moment</h4>
+                <p>Commence par créer ta première tâche !</p>
+                <a href="{{ path('app_task_new') }}" class="btn btn-primary mt-2">
+                    <i class="bi bi-plus-circle"></i> Créer une tâche
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

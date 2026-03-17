@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle tâche{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">
+                    <i class="bi bi-plus-circle"></i>
+                    Créer une nouvelle tâche
+                </h4>
+            </div>
+            <div class="card-body">
+                {{ include('task/_form.html.twig') }}
+            </div>
+            <div class="card-footer">
+                <a href="{{ path('app_task_index') }}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i>
+                    Retour à la liste
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
