@@ -1,3 +1,16 @@
-Technologies utilisés : Symfony · Bootstrap
+# Application de Gestion des Tâches
 
-Description : Outil de productivité avec gestion des priorités, catégories, rappels et tableau de bord analytique.
+Outil de productivité développé avec Symfony.
+
+## Fonctionnalités
+- Gestion des priorités
+- Catégorisation des tâches
+- Système de rappels
+- Tableau de bord analytique
+
+## Technologies
+- **Backend** : Symfony
+- **Frontend** : Bootstrap
+
+## Auteur
+DevAnjaratiana — 2026
